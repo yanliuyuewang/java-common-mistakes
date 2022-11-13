@@ -14,10 +14,17 @@ import java.nio.file.Paths;
 @RestController
 @RequestMapping("handleexception")
 public class HandleExceptionController {
+
+//    @GetMapping("get")
+//    public String get(@RequestParam("business") boolean b) {
+//        return "waffgf" ;
+//    }
+
     @GetMapping("exception")
     public void exception(@RequestParam("business") boolean b) {
         if (b)
             throw new BusinessException("订单不存在", 2001);
+        // 统一异常返回  会用到  RestControllerExceptionHandler
         throw new RuntimeException("系统错误");
     }
 
