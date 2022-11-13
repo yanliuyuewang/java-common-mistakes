@@ -22,11 +22,14 @@ import static org.junit.Assert.assertThat;
 public class StreamDetailTest {
     private static Random random = new Random();
     private List<Order> orders;
-
+    // 生成数据
     @Before
     public void data() {
         orders = Order.getData();
+        System.out.println("wangyue");
 
+        System.out.println(orders);
+        System.out.println("==========================================");
         orders.forEach(System.out::println);
         System.out.println("==========================================");
     }
@@ -36,7 +39,9 @@ public class StreamDetailTest {
         System.out.println("//最近半年的金额大于40的订单");
         orders.stream()
                 .filter(Objects::nonNull)
+                // 最近半年
                 .filter(order -> order.getPlacedAt().isAfter(LocalDateTime.now().minusMonths(6)))
+                // 金额大于 40
                 .filter(order -> order.getTotalPrice() > 40)
                 .forEach(System.out::println);
     }
@@ -91,6 +96,7 @@ public class StreamDetailTest {
     public void groupBy() {
         System.out.println("//按照用户名分组，统计下单数量");
         System.out.println(orders.stream().collect(groupingBy(Order::getCustomerName, counting()))
+                // reversed 倒叙
                 .entrySet().stream().sorted(Map.Entry.<String, Long>comparingByValue().reversed()).collect(toList()));
 
         System.out.println("//按照用户名分组,统计订单总金额");
@@ -105,11 +111,15 @@ public class StreamDetailTest {
 
         System.out.println("//统计最受欢迎的商品，倒序后取第一个");
         orders.stream()
+                // flatMap 把订单转换为商品
                 .flatMap(order -> order.getOrderItemList().stream())
+                //把商品 名作为 Key、Collectors.summingInt 作为 Value 分组统计采购数量
                 .collect(groupingBy(OrderItem::getProductName, summingInt(OrderItem::getProductQuantity)))
                 .entrySet().stream()
+                // 再按 Value 倒序
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .map(Map.Entry::getKey)
+                //获取第一个 Entry
                 .findFirst()
                 .ifPresent(System.out::println);
 
@@ -213,16 +223,25 @@ public class StreamDetailTest {
                         .anyMatch(id -> id == customer.getId()))));
     }
 
+    public static void main(String[] args) {
+        ThreadClass task = new ThreadClass();
+        Thread runner = new Thread((Runnable) task);
+        runner.start();
+    }
+
+
+
     @Test
     public void skipLimit() {
-        orders.stream()
-                .sorted(comparing(Order::getPlacedAt))
+        orders.stream().sorted(comparing(Order::getPlacedAt))
                 .map(order -> order.getCustomerName() + "@" + order.getPlacedAt())
+                //  限制总数
                 .limit(2).forEach(System.out::println);
 
         orders.stream()
                 .sorted(comparing(Order::getPlacedAt))
                 .map(order -> order.getCustomerName() + "@" + order.getPlacedAt())
+                // 跳过前两个
                 .skip(2).limit(2).forEach(System.out::println);
     }
 
@@ -262,5 +281,8 @@ public class StreamDetailTest {
         assertThat(Stream.concat(Stream.concat(IntStream.rangeClosed(1, 1000).boxed(), IntStream.rangeClosed(1, 1000).boxed()), Stream.of(2))
                 .parallel().collect(new MostPopularCollector<>()).get(), is(2));
 
+    }
+
+    private static class ThreadClass {
     }
 }

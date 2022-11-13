@@ -29,6 +29,8 @@ public class LambdaTest {
         Supplier<String> supplier = String::new;
         Supplier<String> stringSupplier = () -> "OK";
 
+        System.out.println(supplier + "//" + stringSupplier );
+
         //Predicate的例子
         Predicate<Integer> positiveNumber = i -> i > 0;
         Predicate<Integer> evenNumber = i -> i % 2 == 0;
