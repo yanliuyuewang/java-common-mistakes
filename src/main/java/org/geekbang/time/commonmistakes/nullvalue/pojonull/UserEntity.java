@@ -3,10 +3,7 @@ package org.geekbang.time.commonmistakes.nullvalue.pojonull;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -14,6 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Data
 @Entity
 @DynamicUpdate
+@Table
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)

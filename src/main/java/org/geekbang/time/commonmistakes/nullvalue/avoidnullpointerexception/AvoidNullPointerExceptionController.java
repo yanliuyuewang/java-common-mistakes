@@ -32,17 +32,29 @@ public class AvoidNullPointerExceptionController {
                 .orElse(Collections.emptyList()).size();
     }
 
+    public static void main(String[] args) {
+        Integer i = 1 ;
+
+        System.out.println(i+1);
+        Integer i2 = null ;
+
+        System.out.println(Optional.ofNullable(i2).orElse(0) + 1);
+
+    }
 
     private List<String> wrongMethod(FooService fooService, Integer i, String s, String t) {
         log.info("result {} {} {} {}", i + 1, s.equals("OK"), s.equals(t),
                 new ConcurrentHashMap<String, String>().put(null, null));
         if (fooService.getBarService().bar().equals("OK"))
             log.info("OK");
-        return null;
+        List a = new ArrayList() ;
+        a.add("wangyue") ;
+        return a;
     }
 
     private List<String> rightMethod(FooService fooService, Integer i, String s, String t) {
-        log.info("result {} {} {} {}", Optional.ofNullable(i).orElse(0) + 1, "OK".equals(s), Objects.equals(s, t), new HashMap<String, String>().put(null, null));
+        log.info("result {} {} {} {}", Optional.ofNullable(i).orElse(0) + 1, "OK".equals(s), Objects.equals(s, t),
+                new HashMap<String, String>().put(null, null));
         Optional.ofNullable(fooService)
                 .map(FooService::getBarService)
                 .filter(barService -> "OK".equals(barService.bar()))

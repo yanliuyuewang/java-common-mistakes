@@ -20,9 +20,12 @@ public class POJONullController {
 
     @GetMapping
     public void test() throws JsonProcessingException {
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new Jdk8Module());
+
         UserDto result = objectMapper.readValue("{\"id\":\"1\", \"age\":30, \"name\":null}", UserDto.class);
+
         log.info("field name with null value dto:{} name:{}", result, result.getName().orElse("N/A"));
         // field name with null value dto:UserDto(id=1, name=Optional.empty, age=Optional[30]) name:N/A
         log.info("missing field name dto:{}", objectMapper.readValue("{\"id\":\"1\", \"age\":30}", UserDto.class));
@@ -43,6 +46,7 @@ public class POJONullController {
         UserEntity userEntity = userEntityRepository.findById(user.getId())
                 .orElseThrow(() -> new IllegalArgumentException("用户不存在"));
 
+        // 这里保证了 姓名不可能为空 , nickname  不需要做处理了
         if (user.getName() != null) {
             userEntity.setName(user.getName().orElse(""));
         }
