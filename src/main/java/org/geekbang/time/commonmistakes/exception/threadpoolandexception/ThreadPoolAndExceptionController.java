@@ -20,7 +20,22 @@ import java.util.stream.IntStream;
 public class ThreadPoolAndExceptionController {
 
     static {
-        Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> log.error("Thread {} got exception", thread, throwable));
+        Thread.setDefaultUncaughtExceptionHandler((thread, throwable) ->
+                log.error("Thread {} got exception", thread, throwable));
+    }
+
+    @GetMapping("executeerror")
+    public void executeerror() throws InterruptedException {
+
+        String prefix = "test";
+        ExecutorService threadPool = Executors.newFixedThreadPool(1);
+        IntStream.rangeClosed(1, 10).forEach(i -> threadPool.execute(() -> {
+            if (i == 5) throw new RuntimeException("error");
+            log.info("I'm done : {}", i);
+        }));
+
+        threadPool.shutdown();
+        threadPool.awaitTermination(1, TimeUnit.HOURS);
     }
 
     @GetMapping("execute")

@@ -21,6 +21,7 @@ public class HandleExceptionController {
         throw new RuntimeException("系统错误");
     }
 
+    //
     @GetMapping("wrong1")
     public void wrong1() {
         try {
@@ -35,7 +36,9 @@ public class HandleExceptionController {
         try {
             readFile();
         } catch (IOException e) {
+            // e.getMasssage 没有  e 详细 明确
             log.error("文件读取错误, {}", e.getMessage());
+//            log.error("文件读取错误, {}", e);
             throw new RuntimeException("系统忙请稍后再试");
         }
     }
@@ -46,6 +49,7 @@ public class HandleExceptionController {
             readFile();
         } catch (Exception e) {
             log.error("文件读取错误", e);
+            // 这里没有给出具体的异常信息
             throw new RuntimeException();
         }
     }
