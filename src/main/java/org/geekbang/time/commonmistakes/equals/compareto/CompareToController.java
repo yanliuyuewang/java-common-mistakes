@@ -17,6 +17,12 @@ import java.util.List;
 @RequestMapping("compareto")
 public class CompareToController {
 
+    public static void main(String[] args) {
+        CompareToController compareToController
+                =new CompareToController();
+        compareToController.wrong();
+    }
+
     @GetMapping("wrong")
     public void wrong() {
 

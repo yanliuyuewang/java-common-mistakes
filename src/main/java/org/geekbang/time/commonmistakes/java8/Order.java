@@ -33,7 +33,7 @@ public class Order {
             order.setOrderItemList(IntStream.rangeClosed(1, random.ints(1, 1, 8).findFirst().getAsInt()).mapToObj(j ->
             {
                 OrderItem orderItem = new OrderItem();
-                Product product = products.get(  random.nextInt(products.size() )  );
+                Product product = products.get(  random.nextInt(products.size()   )  );
                 orderItem.setProductId(product.getId());
                 orderItem.setProductName(product.getName());
                 orderItem.setProductPrice(product.getPrice());

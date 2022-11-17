@@ -1,6 +1,7 @@
 package org.geekbang.time.commonmistakes.java8;
 
 
+import com.rabbitmq.tools.json.JSONUtil;
 import org.geekbang.time.commonmistakes.java8.collector.MostPopularCollector;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,31 @@ import static org.junit.Assert.assertThat;
 public class StreamDetailTest {
     private static Random random = new Random();
     private List<Order> orders;
+
+    public static void main(String[] args) {
+//        ThreadClass task = new ThreadClass();
+//        Thread runner = new Thread((Runnable) task);
+//        runner.start();
+
+        Stream.of("ww" , "e").forEach(System.out::println);
+        System.out.println("======================");
+        List<Integer> list = new ArrayList() ;
+        list.add(1) ;
+        list.add(3) ;
+        list.add(8) ;
+        list.add(20) ;
+        list.stream().filter(b->b>3 ).forEach(System.out::println);
+        System.out.println("======================");
+        Stream.iterate("1",  b -> b +"0").limit(3).forEach(System.out::println);
+        // 这种写法没有了
+//        Stream.iterate("1",a -> !"100".equals(a),  b -> b+"0").limit(3).forEach(System.out::println);
+
+        Stream<Integer> stream3 = new Random().ints().limit(5).boxed();
+
+        stream3.forEach(System.out::println);
+    }
+
+
     // 生成数据
     @Before
     public void data() {
@@ -31,6 +57,7 @@ public class StreamDetailTest {
         System.out.println(orders);
         System.out.println("==========================================");
         orders.forEach(System.out::println);
+
         System.out.println("==========================================");
     }
 
@@ -46,13 +73,16 @@ public class StreamDetailTest {
                 .forEach(System.out::println);
     }
 
+
+
     @Test
     public void map() {
         //计算所有订单商品数量
         //通过两次遍历实现
         LongAdder longAdder = new LongAdder();
         orders.stream().forEach(order ->
-                order.getOrderItemList().forEach(orderItem -> longAdder.add(orderItem.getProductQuantity())));
+                order.getOrderItemList()
+                        .forEach(orderItem -> longAdder.add(orderItem.getProductQuantity())));
 
         //使用两次mapToLong+sum方法实现
         assertThat(longAdder.longValue(), is(orders.stream().mapToLong(order ->
@@ -65,6 +95,7 @@ public class StreamDetailTest {
                 .collect(toList()));
     }
 
+    // 先过滤  再排序
     @Test
     public void sorted() {
         System.out.println("//大于50的订单,按照订单价格倒序前5");
@@ -223,11 +254,7 @@ public class StreamDetailTest {
                         .anyMatch(id -> id == customer.getId()))));
     }
 
-    public static void main(String[] args) {
-        ThreadClass task = new ThreadClass();
-        Thread runner = new Thread((Runnable) task);
-        runner.start();
-    }
+
 
 
 
