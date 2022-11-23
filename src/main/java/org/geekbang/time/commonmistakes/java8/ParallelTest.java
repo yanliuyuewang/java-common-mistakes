@@ -34,22 +34,22 @@ public class ParallelTest {
         Assert.assertEquals(taskCount, thread(taskCount, threadCount));
         stopWatch.stop();
 
-        stopWatch.start("threadpool");
-        Assert.assertEquals(taskCount, threadpool(taskCount, threadCount));
-        stopWatch.stop();
-
-        //试试把这段放到forkjoin下面？
-        stopWatch.start("stream");
-        Assert.assertEquals(taskCount, stream(taskCount, threadCount));
-        stopWatch.stop();
-
-        stopWatch.start("forkjoin");
-        Assert.assertEquals(taskCount, forkjoin(taskCount, threadCount));
-        stopWatch.stop();
-
-        stopWatch.start("completableFuture");
-        Assert.assertEquals(taskCount, completableFuture(taskCount, threadCount));
-        stopWatch.stop();
+//        stopWatch.start("threadpool");
+//        Assert.assertEquals(taskCount, threadpool(taskCount, threadCount));
+//        stopWatch.stop();
+//
+//        //试试把这段放到forkjoin下面？
+//        stopWatch.start("stream");
+//        Assert.assertEquals(taskCount, stream(taskCount, threadCount));
+//        stopWatch.stop();
+//
+//        stopWatch.start("forkjoin");
+//        Assert.assertEquals(taskCount, forkjoin(taskCount, threadCount));
+//        stopWatch.stop();
+//
+//        stopWatch.start("completableFuture");
+//        Assert.assertEquals(taskCount, completableFuture(taskCount, threadCount));
+//        stopWatch.stop();
 
         log.info(stopWatch.prettyPrint());
     }
@@ -62,7 +62,7 @@ public class ParallelTest {
             e.printStackTrace();
         }
     }
-
+    //1
     private int thread(int taskCount, int threadCount) throws InterruptedException {
         AtomicInteger atomicInteger = new AtomicInteger();
         CountDownLatch countDownLatch = new CountDownLatch(threadCount);
@@ -71,9 +71,10 @@ public class ParallelTest {
             countDownLatch.countDown();
         })).forEach(Thread::start);
         countDownLatch.await();
+        //计数器当前值
         return atomicInteger.get();
     }
-
+    // 2
     private int threadpool(int taskCount, int threadCount) throws InterruptedException {
         AtomicInteger atomicInteger = new AtomicInteger();
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);

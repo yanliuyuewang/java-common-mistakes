@@ -13,6 +13,7 @@ public class NormalUserCart extends AbstractCart {
         item.setCouponPrice(BigDecimal.ZERO);
     }
 
+    // 运费
     @Override
     protected void processDeliveryPrice(long userId, Item item) {
         item.setDeliveryPrice(item.getPrice()

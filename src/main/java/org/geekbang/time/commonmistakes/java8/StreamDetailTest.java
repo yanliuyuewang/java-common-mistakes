@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.function.BinaryOperator;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -20,6 +21,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class StreamDetailTest {
+
+
+
+
     private static Random random = new Random();
     private List<Order> orders;
     // 生成数据
@@ -224,9 +229,20 @@ public class StreamDetailTest {
     }
 
     public static void main(String[] args) {
-        ThreadClass task = new ThreadClass();
-        Thread runner = new Thread((Runnable) task);
-        runner.start();
+
+        List<Integer> list = new ArrayList();
+        list.add(1);
+        list.add(1);
+        list.add(3);
+        list.add(3);
+        list.add(3);
+        list.add(2);
+        list.add(2);
+        list = list.stream().distinct().collect(Collectors.toList());
+        System.out.println(list);
+
+
+        System.out.println(list);
     }
 
 
