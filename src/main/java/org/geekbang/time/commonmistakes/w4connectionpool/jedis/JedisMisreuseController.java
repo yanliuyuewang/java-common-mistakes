@@ -1,6 +1,7 @@
 package org.geekbang.time.commonmistakes.w4connectionpool.jedis;
 
 import lombok.extern.slf4j.Slf4j;
+import org.bouncycastle.tsp.TSPUtil;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,10 +32,20 @@ public class JedisMisreuseController {
         }));
     }
 
+    @GetMapping("/wa")
+    public void wr() throws InterruptedException {
+        Jedis jedis = new Jedis("127.0.0.1", 6379);
+        String result = jedis.get("a");
+        System.out.println(result);
+    }
+
+
     @GetMapping("/wrong")
     public void wrong() throws InterruptedException {
         System.out.println("台式机修改代码 1127");
         Jedis jedis = new Jedis("127.0.0.1", 6379);
+
+        System.out.println(jedis.get("a"));
         new Thread(() -> {
             for (int i = 0; i < 1000; i++) {
                 String result = jedis.get("a");
