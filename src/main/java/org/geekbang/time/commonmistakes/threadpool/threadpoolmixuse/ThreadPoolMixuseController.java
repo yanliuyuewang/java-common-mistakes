@@ -51,6 +51,7 @@ public class ThreadPoolMixuseController {
         }, 0, 1, TimeUnit.SECONDS);
     }
 
+    // 10s
     private Callable<Integer> calcTask() {
         return () -> {
             TimeUnit.MILLISECONDS.sleep(10);
