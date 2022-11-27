@@ -23,7 +23,8 @@ public class HttpClientNotReuseController {
     private static CloseableHttpClient httpClient = null;
 
     static {
-        httpClient = HttpClients.custom().setMaxConnPerRoute(1).setMaxConnTotal(1).evictIdleConnections(60, TimeUnit.SECONDS).build();
+        httpClient = HttpClients.custom().setMaxConnPerRoute(1).
+                setMaxConnTotal(1).evictIdleConnections(60, TimeUnit.SECONDS).build();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
@@ -48,10 +49,12 @@ public class HttpClientNotReuseController {
 
     @GetMapping("wrong2")
     public String wrong2() {
+        // 连接池  client 放在tr（）y中
         try (CloseableHttpClient client = HttpClients.custom()
                 .setConnectionManager(new PoolingHttpClientConnectionManager())
                 .evictIdleConnections(60, TimeUnit.SECONDS).build();
-             CloseableHttpResponse response = client.execute(new HttpGet("http://127.0.0.1:45678/httpclientnotreuse/test"))) {
+             CloseableHttpResponse response = client.execute(new
+                     HttpGet("http://127.0.0.1:45678/httpclientnotreuse/test"))) {
             return EntityUtils.toString(response.getEntity());
         } catch (Exception ex) {
             ex.printStackTrace();
