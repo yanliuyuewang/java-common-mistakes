@@ -1,4 +1,4 @@
-package org.geekbang.time.commonmistakes.redundantcode.reflection.right;
+package org.geekbang.time.commonmistakes.w21redundantcode.reflection.right;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;

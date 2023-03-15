@@ -1,4 +1,4 @@
-package org.geekbang.time.commonmistakes.redundantcode.beancopy;
+package org.geekbang.time.commonmistakes.w21redundantcode.beancopy;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
-package org.geekbang.time.commonmistakes.redundantcode.templatemethod.right;
+package org.geekbang.time.commonmistakes.w21redundantcode.templatemethod.right;
 
-import org.geekbang.time.commonmistakes.redundantcode.templatemethod.Cart;
-import org.geekbang.time.commonmistakes.redundantcode.templatemethod.Db;
-import org.geekbang.time.commonmistakes.redundantcode.templatemethod.Item;
+import org.geekbang.time.commonmistakes.w21redundantcode.templatemethod.Cart;
+import org.geekbang.time.commonmistakes.w21redundantcode.templatemethod.Db;
+import org.geekbang.time.commonmistakes.w21redundantcode.templatemethod.Item;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,7 +30,9 @@ public abstract class AbstractCart {
             processDeliveryPrice(userId, item);
         });
 
-        cart.setTotalItemPrice(cart.getItems().stream().map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()))).reduce(BigDecimal.ZERO, BigDecimal::add));
+        cart.setTotalItemPrice(cart.getItems().stream()
+                .map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
         cart.setTotalDeliveryPrice(cart.getItems().stream().map(Item::getDeliveryPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
         cart.setTotalDiscount(cart.getItems().stream().map(Item::getCouponPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
         cart.setPayPrice(cart.getTotalItemPrice().add(cart.getTotalDeliveryPrice()).subtract(cart.getTotalDiscount()));

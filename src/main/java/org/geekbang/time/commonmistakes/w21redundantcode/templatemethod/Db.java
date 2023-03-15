@@ -1,4 +1,4 @@
-package org.geekbang.time.commonmistakes.redundantcode.templatemethod;
+package org.geekbang.time.commonmistakes.w21redundantcode.templatemethod;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

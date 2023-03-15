@@ -1,4 +1,4 @@
-package org.geekbang.time.commonmistakes.redundantcode.reflection.wrong;
+package org.geekbang.time.commonmistakes.w21redundantcode.reflection.wrong;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.client.fluent.Request;
