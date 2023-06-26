@@ -15,6 +15,7 @@ public class CoolOptionalTest {
     @Test(expected = IllegalArgumentException.class)
     public void optional() {
         assertThat(Optional.of(1).get(), is(1));
+//        assertThat(Optional.of(1).get(), is(2));  // 报错
         assertThat(Optional.ofNullable(null).orElse("A"), is("A"));
         assertFalse(OptionalDouble.empty().isPresent());
         assertThat(Optional.of(1).map(Math::incrementExact).get(), is(2));
