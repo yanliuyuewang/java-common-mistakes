@@ -22,4 +22,15 @@ public class CoolOptionalTest {
         assertThat(Optional.of(1).filter(integer -> integer % 2 == 0).orElse(null), is(nullValue()));
         Optional.empty().orElseThrow(IllegalArgumentException::new);
     }
+
+
+    public static void main(String[] args) {
+
+        String a = null ;
+
+        String ww = Optional.ofNullable(a).orElse("空");
+
+        System.out.println(ww);
+
+    }
 }
